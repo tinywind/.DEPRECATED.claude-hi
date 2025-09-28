@@ -1,0 +1,25 @@
+{
+  "name": "claude-hi",
+  "version": "1.0.0",
+  "description": "A simple Node.js package that sends 'hi' to Claude Code every 10 minutes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "dev:unix": "NODE_ENV=development node index.js",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "claude",
+    "automation",
+    "scheduler",
+    "messaging"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
