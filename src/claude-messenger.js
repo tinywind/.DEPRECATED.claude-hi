@@ -2,7 +2,7 @@
  * Claude Code CLI messenger - sends messages to actual Claude Code
  */
 
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const config = require('./config');
 
 class ClaudeCodeMessenger {
@@ -18,7 +18,7 @@ class ClaudeCodeMessenger {
       this.log('info', 'Checking Claude Code CLI availability...');
 
       // Check if Claude Code CLI is available
-      const version = await this.executeCommand('claude --version');
+      const version = await this.executeCommand('claude', ['--version']);
 
       if (version) {
         this.isConnected = true;
@@ -45,11 +45,7 @@ class ClaudeCodeMessenger {
       // Format the message with context
       const formattedMessage = this.formatMessage(content);
 
-      // Send message to Claude Code using CLI
-      // Use claude directly with the message as argument
-      const escapedMessage = formattedMessage.replace(/"/g, '\\"');
-      const command = `claude -p "${escapedMessage}"`;
-      const result = await this.executeCommand(command);
+      const result = await this.executeCommand('claude', ['-p', formattedMessage]);
 
       // Update success metrics
       this.lastMessageTime = new Date();
@@ -88,9 +84,9 @@ class ClaudeCodeMessenger {
     return `[Automated Message from Claude Hi Service at ${timestamp}] ${content}`;
   }
 
-  executeCommand(command) {
+  executeCommand(command, args) {
     return new Promise((resolve, reject) => {
-      exec(command, { encoding: 'utf8', maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
+      execFile(command, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
         if (error) {
           this.log('debug', `Command error: ${error.message}`);
           reject(error);

@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "node index.js",
     "dev:unix": "NODE_ENV=development node index.js",
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "test:security": "node test/claude-command.test.js"
   },
   "keywords": [
     "claude",
